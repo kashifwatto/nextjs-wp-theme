@@ -63,3 +63,17 @@ export async function getAllProducts() {
   return allProducts;
 }
 
+
+export async function getTopProductsForHomepage() {
+  return wooFetch(WOO_ENDPOINTS.products, {
+    params: {
+      per_page: 8,
+      page: 1,
+      status: "publish",
+    },
+    tags: ["products"],
+    revalidate: 60,
+  });
+}
+
+

@@ -1,23 +1,31 @@
+import Link from "next/link";
 import React from "react";
+import { getCategories } from "@/src/lib/woocommerce/categories";
 
-export default function Header() {
+export  default async function Header() {
+          const categories = await getCategories();
+
   return (
     <header className="w-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 text-slate-50 shadow-[0_20px_60px_rgba(0,0,0,0.18)] pb-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-6 py-3 text-sm text-slate-300 gap-2 sm:gap-0">
         <span>Free shipping on orders over $75 | 24/7 Support</span>
         <div className="flex items-center">
-          <a className="text-slate-400 hover:text-white transition-colors" href="#">
+          <Link className="text-slate-400 hover:text-white transition-colors" href="#">
             Track Order
-          </a>
-          <a className="ml-5 text-slate-400 hover:text-white transition-colors" href="#">
+          </Link>
+          <Link className="ml-5 text-slate-400 hover:text-white transition-colors" href="#">
             Wishlist
-          </a>
+          </Link>
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 px-6 py-6">
         <div className="flex flex-col gap-2 min-w-[180px]">
-          <div className="text-2xl font-extrabold tracking-[1.2px] text-white">WooShop</div>
+          <Link href={'/'} className="text-2xl font-extrabold tracking-[1.2px] text-white">
+          
+          WooShop
+          </Link>
+
           <p className="m-0 text-slate-300 max-w-[320px]">
             Premium products from your favorite store.
           </p>
@@ -51,24 +59,16 @@ export default function Header() {
       </div>
 
       <nav className="flex flex-wrap justify-center sm:justify-start gap-4 px-6 pb-3 text-slate-200">
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
+        <Link className="rounded-full px-4 py-2 hover:bg-white/10 transition" href={'/'}>
           Home
-        </a>
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
-          New Arrivals
-        </a>
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
-          Beauty
-        </a>
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
-          Electronics
-        </a>
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
-          Fashion
-        </a>
-        <a className="rounded-full px-4 py-2 hover:bg-white/10 transition" href="#">
-          Sale
-        </a>
+        </Link>
+                            {categories.map((category,index) => (
+                                <Link className="rounded-full px-4 py-2 hover:bg-white/10 transition" href={`/categories/${category.slug}`} >
+           {category.name}
+        </Link>
+                            ))}
+
+        
       </nav>
     </header>
   );

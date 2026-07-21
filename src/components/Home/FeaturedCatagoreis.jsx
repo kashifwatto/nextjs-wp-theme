@@ -5,6 +5,7 @@ import Link from 'next/link';
  
 const FeaturedCatagoreis = async() => {
     // TODO: Replace with dynamic data from WooCommerce
+
         const categories = await getCategories();
 
 
@@ -22,7 +23,7 @@ const FeaturedCatagoreis = async() => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categories.map((category,index) => (
-                        <>
+                        
                         
                         <div
                             key={index
@@ -51,7 +52,7 @@ const FeaturedCatagoreis = async() => {
                                 </Link>
                             </div>
                         </div>
-                        </>
+                        
                     ))}
                 </div>
             </div>

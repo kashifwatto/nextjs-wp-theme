@@ -17,7 +17,7 @@ const ProductDesign = ({ product }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
 
       {/* Product Image */}
-      <Link href={`/product/${product.slug}`}>
+      <Link href={`/shop/${product.slug}`}>
         <img
           src={image}
           alt={product.name}
@@ -28,7 +28,7 @@ const ProductDesign = ({ product }) => {
       <div className="p-4">
 
         {/* Product Name */}
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/shop/${product.slug}`}>
           <h3 className="text-lg font-semibold hover:text-blue-600 transition">
             {product.name}
           </h3>
