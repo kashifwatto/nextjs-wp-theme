@@ -83,29 +83,45 @@ export default function ProductVariations({
   };
 
   const handleAddToCart = () => {
-    if (selectedVariation) {
-      console.log('Adding to cart:', {
-        productId: product.id,
-        variationId: selectedVariation.id,
-        attributes: selectedAttributes,
-        quantity: quantity,
-        price: selectedVariation.price,
-      });
-      // TODO: Implement actual add to cart functionality
-    } else {
+    if (!selectedVariation) {
       alert('Please select all variation options');
+      return;
     }
+
+    const itemPrice = parseFloat(displayPrice) || 0;
+    const newItem = {
+      id: selectedVariation.id,
+      name: product.name,
+      price: itemPrice,
+      quantity,
+      image: selectedVariation.image?.src || product.images?.[0]?.src || '',
+      variation: selectedVariation.sku || '',
+      attributes: selectedAttributes,
+    };
+
+    const existingCart = JSON.parse(window.localStorage.getItem('wooCart') || '[]');
+    const existingIndex = existingCart.findIndex((item) => item.id === newItem.id);
+
+    if (existingIndex >= 0) {
+      existingCart[existingIndex].quantity += quantity;
+    } else {
+      existingCart.push(newItem);
+    }
+
+    window.localStorage.setItem('wooCart', JSON.stringify(existingCart));
+    alert('Variation added to cart');
   };
 
-  const displayPrice = selectedVariation 
-    ? selectedVariation.price 
-    : product.price;
+  const displayPrice = selectedVariation
+    ? parseFloat(selectedVariation.price) || 0
+    : parseFloat(product.price) || 0;
 
-  const displayStockStatus = selectedVariation 
-    ? selectedVariation.stock_status 
+  const displayStockStatus = selectedVariation
+    ? selectedVariation.stock_status
     : product.stock_status;
 
   const displayImage = selectedVariation?.image?.src || product.images?.[0]?.src;
+  const totalPrice = (displayPrice * quantity).toFixed(2);
 
   return (
     <div className="space-y-6">
@@ -140,13 +156,17 @@ export default function ProductVariations({
       <div className="mt-8 pt-6 border-t">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-bold text-green-600">
-            ${displayPrice}
+            ${displayPrice.toFixed(2)}
           </span>
           {product.regular_price && displayPrice < product.regular_price && (
             <span className="text-lg text-gray-400 line-through">
               ${product.regular_price}
             </span>
           )}
+        </div>
+
+        <div className="mt-3 text-sm text-slate-500">
+          Total: <span className="font-semibold text-slate-900">${totalPrice}</span>
         </div>
       </div>
 

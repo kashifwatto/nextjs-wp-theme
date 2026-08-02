@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug, getProductVariations } from "@/src/lib/woocommerce/products";
 import ProductVariations from "@/src/components/Product/ProductVariations";
+import ProductDetailsClient from "@/src/components/Product/ProductDetailsClient";
 
 export default async function Page({ params }) {
     const { slug } = await params;
@@ -165,59 +166,7 @@ export default async function Page({ params }) {
                             variations={variations}
                         />
                     ) : (
-                        <>
-                            {/* Attributes */}
-
-                            {product.attributes?.length > 0 && (
-                                <div className="mt-8">
-
-                                    <h3 className="font-semibold text-lg mb-3">
-                                        Product Attributes
-                                    </h3>
-
-                                    {product.attributes.map((attr) => (
-                                        <div
-                                            key={attr.id}
-                                            className="flex border-b py-2"
-                                        >
-                                            <div className="w-40 font-medium">
-                                                {attr.name}
-                                            </div>
-
-                                            <div>
-                                                {attr.options.join(", ")}
-                                            </div>
-                                        </div>
-                                    ))}
-
-                                </div>
-                            )}
-
-                            {/* Quantity */}
-
-                            <div className="mt-8">
-
-                                <label className="font-semibold block mb-2">
-                                    Quantity
-                                </label>
-
-                                <input
-                                    type="number"
-                                    defaultValue={1}
-                                    min={1}
-                                    className="border rounded px-3 py-2 w-24"
-                                />
-
-                            </div>
-
-                            {/* Add to Cart */}
-
-                            <button className="mt-6 w-full bg-black text-white py-4 rounded-lg hover:bg-gray-800 transition">
-
-                                Add to Cart
-
-                            </button>
-                        </>
+                        <ProductDetailsClient product={product} />
                     )}
 
                 </div>
