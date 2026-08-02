@@ -76,4 +76,12 @@ export async function getTopProductsForHomepage() {
   });
 }
 
+export async function getProductVariations(productId) {
+  return wooFetch(WOO_ENDPOINTS.productVariations(productId), {
+    params: { per_page: 100 },
+    tags: [`product-${productId}-variations`],
+    revalidate: 300,
+  });
+}
+
 

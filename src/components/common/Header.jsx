@@ -1,9 +1,27 @@
-import Link from "next/link";
-import React from "react";
-import { getCategories } from "@/src/lib/woocommerce/categories";
+'use client';
 
-export  default async function Header() {
-          const categories = await getCategories();
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import CartDrawer from "@/src/components/common/CartDrawer";
+import AuthPopup from "@/src/components/common/AuthPopup";
+
+export default function Header() {
+  const [categories, setCategories] = useState([]);
+  const [showAuthPopup, setShowAuthPopup] = useState(false);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/woo/categories');
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Failed to load categories', error);
+      }
+    }
+
+    loadCategories();
+  }, []);
 
   return (
     <header className="w-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 text-slate-50 shadow-[0_20px_60px_rgba(0,0,0,0.18)] pb-4">
@@ -46,16 +64,16 @@ export  default async function Header() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <button className="rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10">
+          <button
+            onClick={() => setShowAuthPopup(true)}
+            className="rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
+          >
             Sign In
           </button>
-          <button className="relative rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10">
-            Cart
-            <span className="ml-2 inline-flex items-center justify-center min-w-[24px] h-6 rounded-full bg-red-500 text-xs text-white px-2">
-              3
-            </span>
-          </button>
+          <CartDrawer />
         </div>
+
+        <AuthPopup open={showAuthPopup} onClose={() => setShowAuthPopup(false)} />
       </div>
 
       <nav className="flex flex-wrap justify-center sm:justify-start gap-4 px-6 pb-3 text-slate-200">
@@ -63,7 +81,7 @@ export  default async function Header() {
           Home
         </Link>
                             {categories.map((category,index) => (
-                                <Link className="rounded-full px-4 py-2 hover:bg-white/10 transition" href={`/categories/${category.slug}`} >
+                                <Link key={index} className="rounded-full px-4 py-2 hover:bg-white/10 transition" href={`/categories/${category.slug}`} >
            {category.name}
         </Link>
                             ))}

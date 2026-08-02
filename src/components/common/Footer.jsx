@@ -1,7 +1,26 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const Footer = () => {
-    return (
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/woo/categories');
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Failed to load categories', error);
+      }
+    }
+
+    loadCategories();
+  }, []);
+
+  return (
         <footer className="bg-gray-900 text-gray-200">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex flex-col md:flex-row md:justify-between gap-8">
@@ -21,9 +40,13 @@ const Footer = () => {
                         <div>
                             <h4 className="font-semibold mb-3">Shop</h4>
                             <ul className="text-sm text-gray-400 space-y-2">
-                                <li><a href="#" className="hover:text-white">New Arrivals</a></li>
-                                <li><a href="#" className="hover:text-white">Bestsellers</a></li>
-                                <li><a href="#" className="hover:text-white">Sustainable Picks</a></li>
+                                  {categories.map((category,index) => (
+          
+                                           <li><Link href={`/categories/${category.slug}`}  className="hover:text-white"> {category.name}</Link></li>
+
+        
+                            ))}
+                               
                             </ul>
                         </div>
 

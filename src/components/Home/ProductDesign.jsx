@@ -14,7 +14,7 @@ const ProductDesign = ({ product }) => {
   ));
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+    <div className="bg-white    rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
 
       {/* Product Image */}
       <Link href={`/shop/${product.slug}`}>
@@ -25,14 +25,17 @@ const ProductDesign = ({ product }) => {
         />
       </Link>
 
-      <div className="p-4">
+      <div className="p-4 ">
 
         {/* Product Name */}
-        <Link href={`/shop/${product.slug}`}>
+        <div className="h-[50px]">
+  <Link href={`/shop/${product.slug}`}>
           <h3 className="text-lg font-semibold hover:text-blue-600 transition">
             {product.name}
           </h3>
         </Link>
+        </div>
+      
 
         {/* Rating */}
         <div className="flex items-center gap-2 my-2">
