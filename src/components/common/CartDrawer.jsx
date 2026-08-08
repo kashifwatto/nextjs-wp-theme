@@ -31,7 +31,7 @@ const CartDrawer = () => {
             <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="relative rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
+                className="relative cursor-pointer rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
                 aria-expanded={open}
                 aria-controls="cart-drawer"
             >
@@ -60,7 +60,7 @@ const CartDrawer = () => {
                     <button
                         type="button"
                         onClick={() => setOpen(false)}
-                        className="rounded-full bg-slate-800/80 px-3 py-2 text-slate-200 hover:bg-slate-700 transition"
+                        className="rounded-full cursor-pointer bg-slate-800/80 px-3 py-2 text-slate-200 hover:bg-slate-700 transition"
                     >
                         Close
                     </button>

@@ -66,7 +66,7 @@ export default function Header() {
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setShowAuthPopup(true)}
-            className="rounded-full border border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
+            className="rounded-full border cursor-pointer border-white/15 bg-white/5 text-slate-50 px-5 py-3 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10"
           >
             Sign In
           </button>

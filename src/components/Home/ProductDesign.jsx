@@ -86,17 +86,11 @@ const ProductDesign = ({ product }) => {
         {/* Buttons */}
         <div className="flex gap-2">
 
-          <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
-            Add to Cart
-          </button>
-
-          <Link
-            href={`/shop/${product.slug}`}
-            className="px-4 py-2 border rounded hover:bg-gray-100"
-          >
-            View
+          <Link   href={`/shop/${product.slug}`} className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
+            View Product
           </Link>
 
+         
         </div>
 
       </div>
